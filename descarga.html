@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materiales Informativos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <section class="contenedor">
+        <h1>Materiales Informativos</h1>
+        
+       
+        <input type="text" id="busqueda" placeholder="Buscar material..." onkeyup="filtrarTarjetas()">
+        
+        <div class="grid" id="grid">
+            
+        </div>
+    </section>
+
+    <script>
+        //ACA AGREGAS NOMBRES
+        const nombres = [
+            " Vadela, Amelia Erlinda",
+            "Gago, Manuel",
+            "Acuña, Elba Eva",
+            "Aragón, Ricardo Alejandro",
+            "Condomi, Miguel Enrique",
+            "Jorge Luis Congett",
+            "Farías, Florinda Antonia",
+            "Gagliano, Juan Carlos",
+            "Jauregui, Tomas",
+            "Matthews, Roberto Jorge",
+            "Martínez, Ubaldo Nieves",
+            "Mosquera, Juan José",
+            "Muratore, Santa",
+            "Perrone, Hugo Ernesto",
+            "Ramírez, Darío",
+            "Rigoni López, Roberto Daniel",
+            "Ron, Rodolfo Alberto",
+            "Saez, Hugo Alberto",
+            "San Pedro, Oscar Pedro",
+            "Saun, José",
+            "Vermi, Horacio Raul",
+            "Abdon, Ricardo Elías",
+            "Aguilar, Martin",
+            "Busemi, Héctor Aníbal",
+            "Carloni, Oscar Marcos",
+            "Castillo, Carlos Roberto",
+            "Cuevas, Elena Ester",
+            "Duré, Rubén Sabino",
+            "García, Carlos Vicente",
+            "Gofin, Sabina Miriam",
+            "Gómez, Mario Alberto",
+            "López, Alicia Mabel",
+            "Mayor, María Angélica",
+            "Olmedo, Miguel Ángel",
+            "Rigoni López, Roberto Daniel",
+            "Rosales, Carlos Rafael",
+            "Van Gelderen, Roberto Ricardo",
+            "Jáuregui, Alicia Haydee",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",   
+        ];
+
+        
+        const enlaces = [
+            "https://docs.google.com/document/d/156hNzHeSHmDAeZ3CWDi9OtnqWNDJseR4/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1ZdSJhqOnlLxz23L1np6XncgScI4yDMep/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/191h_IdR8DtqtxYvoOU4a_fmBgN-VnWcd/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1h-1-PG3kIfOu2mSm_pdB1j8KlC9TRSKa/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1UJOpA-o0lrL9FUh7ZRbXK4piPE3Fcnqv/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1R21jgyxvfIyNS26jLl4Oxt3wvbKQiIuO/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1co5hlHZ1MD9-KyuvSddyQe9lmxR3MJ2E/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1Yz2rYV2HUQ7MsjsJPwL8thxO4oK8U1lQ/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1VekkF8R9UVnMKwERXYiUyyLHCH3TZRKe/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1FVV7_Ik545fQZvw9O19QRDlfAW6m-tml/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/167o-fP3iGicJO7YduteRDhIjifvISc2l/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/13lJrlmri0a58lbUAJ3SaQO2A8mOPuK6W/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/12W0-V_esOYNDMRVmnLeSs6ILzFJ5IPe6/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1fmAYUOA5JOHYuIZSnApMEarHehDpysic/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1U_veEdW3DMnIKr27Z_SY0ptXDOGdo5rg/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/11zEDnadqek4YP0LvsuON_Vu5jUA4oOVr/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1QArJ9qrrerDClyqA6BZ1aooIZYQC6RZR/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1w2ksRt1tAcdIgUbFK66bsqnZaYkPHAMS/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1VCgdRGBt9LhsZ1oGNPv8ZqjblGSujEoJ/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1TyWoAHLD50JFEAgCEd5RasRh584bRNXo/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1ImVUzlaCMzhbB-eAxb0G4lZpXC51V7dm/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1_ybqOi8voUwa4YFCxunKuSv-aQ65UT8f/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1BMwipyfesQbG4oPh-mb-atRFTIEhwFhi/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1Vf6CjouIJ6ojzEXaI7M0mUbsZF_JZ17A/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1aqN_cOnuQsoMp398lxWG8c4bNVbw5XCX/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/113v0tm6xyxVJ7wT3V1iJR30_U07N655c/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1zPRwACWoEQy3DaxvqOTBuegBePRz_FBF/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1hBD6Ih3J3v-dbd1Li4J7YLwLkwLkBKmW/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1r7Fs90zv8C1a9RYi_SjfwigHmn5AEEkH/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1xC-NMAcF-w1xhg2kFFne_7gn4GIuhD7G/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1IO_MZbtDwo9SQK5kFZtUBPVf26aOVkrr/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1M-FKAAkeTtzf2_6hSuBRKzwDM6d7BzQ4/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1_MNEXpgLcnzeVzSAe8p5wcewrwVzBpfc/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1YkkQadgePIfHcbqAo4HGC85OP8NF9py4/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/11zEDnadqek4YP0LvsuON_Vu5jUA4oOVr/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1Cj65cCv8kNaNAQfnSc5cm8q8rDOl3yDK/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1zP2LtXhPfhcGlbni8nkcV2yGi3taYKTS/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "https://docs.google.com/document/d/1i_TZSl7WcCSoUogvjzfmlqo7CP73Z0jp/edit?usp=sharing&ouid=102085295101416532698&rtpof=true&sd=true",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+   
+        ];
+
+        
+        const grid = document.getElementById('grid');
+
+        for (let i = 1; i <= 550; i++) {
+            const tarjeta = document.createElement('div');
+            tarjeta.classList.add('tarjeta');
+            
+            
+            const titulo = document.createElement('h2');
+            titulo.innerText = nombres[i - 1] || `Material ${i}`; 
+            tarjeta.appendChild(titulo);
+            
+            const boton = document.createElement('a');
+            boton.innerText = 'Descargar';
+            boton.href = enlaces[i - 1];  
+            boton.classList.add('boton');
+            tarjeta.appendChild(boton);
+            
+          
+            grid.appendChild(tarjeta);
+        }
+
+      
+        function filtrarTarjetas() {
+            const input = document.getElementById('busqueda').value.toLowerCase();
+            const tarjetas = document.querySelectorAll('.tarjeta');
+
+            tarjetas.forEach(tarjeta => {
+                const titulo = tarjeta.querySelector('h2').innerText.toLowerCase();
+                if (titulo.includes(input)) {
+                    tarjeta.style.display = 'block';  
+                } else {
+                    tarjeta.style.display = 'none';  
+                }
+            });
+        }
+    </script>
+</body>
+</html>
